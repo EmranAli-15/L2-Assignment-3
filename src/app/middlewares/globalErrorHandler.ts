@@ -1,6 +1,8 @@
 import { ErrorRequestHandler } from "express";
 import validatorError from "../errors/validatorError";
 import mongoServerError from "../errors/mongoServerError";
+import AppError from "../errors/AppError";
+import { errorsType } from "../interface/error.interface";
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     let handledErrors;
@@ -8,13 +10,45 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
 
     if (error.name === 'ValidationError') {
         const simplifiedErrors = validatorError(error);
-        handledErrors = simplifiedErrors.handledErrors;
+        handledErrors = simplifiedErrors;
         status = simplifiedErrors.status;
     }
     else if (error.name === 'MongoServerError') {
         const simplifiedErrors = mongoServerError(error);
-        handledErrors = simplifiedErrors.handledErrors;
+        handledErrors = simplifiedErrors;
         status = simplifiedErrors.status;
+    }
+    else if (error instanceof AppError) {
+        const instanceofAppError: errorsType = {
+            success: false,
+            message: error?.message,
+            errorMessages: [
+                {
+                    path: '',
+                    message: error?.message
+                }
+            ],
+            status: error.statusCode,
+            stack: error?.stack ? error.stack : ''
+        };
+        handledErrors = instanceofAppError;
+        status = error.statusCode;
+    }
+    else if (error instanceof Error) {
+        const instanceofAppError: errorsType = {
+            success: false,
+            message: error?.message,
+            errorMessages: [
+                {
+                    path: '',
+                    message: error?.message
+                }
+            ],
+            status: 400,
+            stack: error?.stack ? error.stack : ''
+        };
+        handledErrors = instanceofAppError;
+        status = 400;
     }
 
 

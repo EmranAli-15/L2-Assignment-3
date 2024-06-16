@@ -10,14 +10,10 @@ const mongoServerError = (error: any) => {
         success: false,
         message: 'Duplicate Data',
         errorMessages: [errObg],
+        status: 400,
         stack: error?.stack ? error.stack : ''
     };
-
-    const responseError = {
-        handledErrors,
-        status: 400
-    }
-    return responseError;
+    return handledErrors;
 
 };
 

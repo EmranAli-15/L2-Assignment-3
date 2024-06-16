@@ -19,14 +19,11 @@ const validatorError = (error: mongoose.Error.ValidationError) => {
         success: false,
         message: error.message,
         errorMessages: errArr,
+        status: 400,
         stack: error?.stack ? error.stack : ''
     };
 
-    const responseError = {
-        handledErrors,
-        status: 400
-    }
-    return responseError;
+    return handledErrors;
 };
 
 export default validatorError;
