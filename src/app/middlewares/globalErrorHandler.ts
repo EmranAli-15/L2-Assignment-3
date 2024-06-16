@@ -1,14 +1,21 @@
 import { ErrorRequestHandler } from "express";
+import { errorsType } from "../interface/error.interface";
+import { ZodError } from "zod";
 import validatorError from "../errors/validatorError";
 import mongoServerError from "../errors/mongoServerError";
 import AppError from "../errors/AppError";
-import { errorsType } from "../interface/error.interface";
+import zodError from "../errors/zodError";
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     let handledErrors;
     let status = 400;
 
-    if (error.name === 'ValidationError') {
+    if (error instanceof ZodError) {
+        const simplifiedErrors = zodError(error);
+        handledErrors = simplifiedErrors;
+        status = simplifiedErrors.status;
+    }
+    else if (error.name === 'ValidationError') {
         const simplifiedErrors = validatorError(error);
         handledErrors = simplifiedErrors;
         status = simplifiedErrors.status;
