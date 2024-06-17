@@ -8,4 +8,5 @@ export default {
     port: process.env.PORT,
     saltRounds: process.env.SALT_ROUNDS,
     userPassword: process.env.USER_PASSWORD,
+    accessToken: process.env.ACCESS_TOKEN
 };

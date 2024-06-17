@@ -8,7 +8,8 @@ const loginUser = catchAsync(
         res.status(200).json({
             success: true,
             message: 'User logged successfully',
-            data: result
+            token: result.accessToken,
+            data: result.isUserExist
         });
     }
 );
