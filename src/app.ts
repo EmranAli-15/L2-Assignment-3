@@ -23,6 +23,6 @@ app.get('/', (req, res) => {
     res.send('WELCOME TO ASSIGNMENT --3--');
 });
 
-app.use(globalErrorHandler)
+app.use(globalErrorHandler);
 
 export default app;

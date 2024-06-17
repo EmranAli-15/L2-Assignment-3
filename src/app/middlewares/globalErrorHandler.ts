@@ -59,7 +59,7 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     }
 
 
-    res.status(status).json({
+    return res.status(status).json({
         success: handledErrors?.success,
         message: handledErrors?.message,
         errorSources: handledErrors?.errorMessages,

@@ -16,12 +16,11 @@ const userSchema = new Schema<TUser>(
         },
         password: {
             type: String,
-            required: true
+            required: false
         },
         phone: {
             type: String,
-            required: true,
-            unique: true
+            required: true
         },
         role: {
             type: String,
@@ -49,5 +48,11 @@ userSchema.post('save', function (next) {
     const user = this;
     user.password = "";
 });
+
+userSchema.methods.toJSON = function () {
+    const user = this.toObject();
+    delete user.password; // Remove the password field
+    return user;
+};
 
 export const User = model<TUser>('User', userSchema);
