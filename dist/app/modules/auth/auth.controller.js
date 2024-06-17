@@ -12,21 +12,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = __importDefault(require("./app"));
-const mongoose_1 = __importDefault(require("mongoose"));
-const config_1 = __importDefault(require("./app/config"));
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield mongoose_1.default.connect(config_1.default.database_url);
-            app_1.default.listen(config_1.default.port, () => {
-                console.log(`Example app listening on port ${config_1.default.port}`);
-            });
-        }
-        catch (error) {
-            console.log(error);
-        }
+exports.authControllers = void 0;
+const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
+const auth_service_1 = require("./auth.service");
+const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield auth_service_1.authServices.loginUser(req.body);
+    res.status(200).json({
+        success: true,
+        message: 'User logged successfully',
+        token: result.accessToken,
+        data: result.isUserExist
     });
-}
-;
-main();
+}));
+exports.authControllers = {
+    loginUser
+};

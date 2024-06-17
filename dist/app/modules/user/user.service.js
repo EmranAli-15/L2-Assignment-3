@@ -12,21 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = __importDefault(require("./app"));
-const mongoose_1 = __importDefault(require("mongoose"));
-const config_1 = __importDefault(require("./app/config"));
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield mongoose_1.default.connect(config_1.default.database_url);
-            app_1.default.listen(config_1.default.port, () => {
-                console.log(`Example app listening on port ${config_1.default.port}`);
-            });
-        }
-        catch (error) {
-            console.log(error);
-        }
-    });
-}
-;
-main();
+exports.userServices = void 0;
+const config_1 = __importDefault(require("../../config"));
+const user_model_1 = require("./user.model");
+const createUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    payload.password = (payload === null || payload === void 0 ? void 0 : payload.password) || config_1.default.userPassword;
+    const result = yield user_model_1.User.create(payload);
+    return result;
+});
+exports.userServices = {
+    createUserIntoDB,
+};
