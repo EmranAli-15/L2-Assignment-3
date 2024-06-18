@@ -5,11 +5,21 @@ const getAllFacility = catchAsync(
     async (req, res) => {
         const result = await facilityServices.getAllFacilityFromDB();
 
-        res.status(200).json({
-            success: true,
-            message: 'Facilities retrieved successfully',
-            data: result
-        });
+        if (result.length === 0) {
+            res.status(200).json({
+                success: true,
+                "statusCode": 404,
+                message: 'No data found',
+                data: result
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                "statusCode": 200,
+                message: 'Facilities retrieved successfully',
+                data: result
+            });
+        }
     }
 );
 

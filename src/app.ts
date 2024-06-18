@@ -29,6 +29,14 @@ app.get('/', (req, res) => {
     res.send('WELCOME TO ASSIGNMENT --3--');
 });
 
+app.use((req: Request, res: Response, next) => {
+    res.status(404).json({
+        success: false,
+        statusCode: 404,
+        message: "Not Found",
+    })
+});
+
 app.use(globalErrorHandler);
 
 export default app;

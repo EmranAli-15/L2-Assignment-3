@@ -3,9 +3,10 @@ import { TBooking } from "./booking.interface";
 import { User } from "../user/user.model";
 import { Facility } from "../facility/facility.model";
 import AppError from "../../errors/AppError";
-import mongoose from "mongoose";
+import mongoose, { ObjectId, Types } from "mongoose";
 import { Availability } from "../availability/availability.model";
 import { Booking } from "./booking.model";
+import { Schema } from "zod";
 
 const createBookingIntoDB = async (user: JwtPayload, payload: TBooking) => {
 
@@ -17,9 +18,13 @@ const createBookingIntoDB = async (user: JwtPayload, payload: TBooking) => {
         throw new AppError(400, 'Your provided time is not acceptable!');
     };
 
+    const isFacilityExist = await Facility.findById(payload.facility);
+    if (!isFacilityExist) {
+        throw new AppError(400, 'The facility is not exist!');
+    };
+
     const userData = await User.findOne({ email: email });
-    const userObjectId = userData?._id;
-    const userId = userObjectId?.toString();
+    const userId = userData?._id;
 
     const facilityData = await Facility.findOne({ _id: payload?.facility });
     const pricePerHour = facilityData?.pricePerHour;
@@ -29,7 +34,7 @@ const createBookingIntoDB = async (user: JwtPayload, payload: TBooking) => {
 
     payload.payableAmount = (endTime - startTime) * (pricePerHour ? pricePerHour : 30);
     payload.isBooked = "confirmed";
-    payload.user = userId as string;
+    payload.user = userId as Types.ObjectId;
 
     const session = await mongoose.startSession();
     try {
@@ -79,7 +84,7 @@ const createBookingIntoDB = async (user: JwtPayload, payload: TBooking) => {
 
 };
 
-const getAllBookingForAdminFromDB = async() => {
+const getAllBookingForAdminFromDB = async () => {
     const result = await Booking.find().populate('user').populate('facility');
     return result;
 }

@@ -11,11 +11,21 @@ const getCheckedAvailability = catchAsync(
 
         const result = await availabilityServices.checkedAvailability(getDate as string);
 
-        res.status(200).json({
-            success: true,
-            message: 'Availability checked successfully',
-            data: result
-        });
+        if (result.length === 0) {
+            res.status(200).json({
+                success: true,
+                "statusCode": 404,
+                message: 'No data found',
+                data: result
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                "statusCode": 200,
+                message: 'Availability checked successfully',
+                data: result
+            });
+        }
     }
 );
 

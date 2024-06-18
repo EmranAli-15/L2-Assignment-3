@@ -2,7 +2,7 @@ import catchAsync from "../../utils/catchAsync";
 import { bookingServices } from "./booking.service";
 
 const createBooking = catchAsync(
-    async(req, res) => {
+    async (req, res) => {
         const user = req.user;
         const result = await bookingServices.createBookingIntoDB(user, req.body);
 
@@ -15,14 +15,24 @@ const createBooking = catchAsync(
 );
 
 const getAllBookingForAdminFromDB = catchAsync(
-    async(req, res) => {
+    async (req, res) => {
         const result = await bookingServices.getAllBookingForAdminFromDB();
 
-        res.status(200).json({
-            success: true,
-            message: 'Bookings retrieved successfully',
-            data: result
-        });
+        if (result.length === 0) {
+            res.status(200).json({
+                success: true,
+                "statusCode": 404,
+                message: 'No data found',
+                data: result
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                "statusCode": 200,
+                message: 'Bookings retrieved successfully',
+                data: result
+            });
+        }
     }
 );
 
