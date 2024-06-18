@@ -5,6 +5,7 @@ import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import { authRoutes } from './app/modules/auth/auth.route';
 import { facilityRoutes } from './app/modules/facility/facility.route';
 import { availabilityRoutes } from './app/modules/availability/availability.route';
+import { bookingRoutes } from './app/modules/booking/booking.route';
 const app = express();
 
 app.use(express.json());
@@ -18,6 +19,7 @@ app.use('/api', userRoutes);
 app.use('/api', authRoutes);
 app.use('/api', facilityRoutes);
 app.use('/api', availabilityRoutes);
+app.use('/api', bookingRoutes);
 
 // -----ROUTES END----- //
 

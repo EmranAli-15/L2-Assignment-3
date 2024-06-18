@@ -3,7 +3,7 @@ import { TBooking } from "./booking.interface";
 
 const bookingSchema = new Schema<TBooking>({
     date: {
-        type: Date,
+        type: String,
         required: true
     },
     startTime: {
@@ -15,8 +15,8 @@ const bookingSchema = new Schema<TBooking>({
         required: true
     },
     user: {
-        type: Schema.ObjectId,
-        required: true,
+        type: String,
+        required: false,
         ref: 'User'
     },
     facility: {
@@ -26,13 +26,13 @@ const bookingSchema = new Schema<TBooking>({
     },
     payableAmount: {
         type: Number,
-        required: true
+        required: false
     },
     isBooked: {
         type: String,
         enum: ["confirmed", "unconfirmed", "canceled"],
         required: false,
-        default: "unconfirmed"
+        default: "confirmed"
     }
 });
 
