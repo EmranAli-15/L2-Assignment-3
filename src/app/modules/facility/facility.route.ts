@@ -6,6 +6,8 @@ import auth, { userRole } from '../../middlewares/auth';
 
 const route = express.Router();
 
+route.get('/facility', facilityControllers.getAllFacility);
+
 route.post('/facility', auth(userRole.admin), validateRequest(facilityValidations.createFacilityValidation), facilityControllers.createFacility);
 
 route.put('/facility/:id', auth(userRole.admin), validateRequest(facilityValidations.updateFacilityValidation), facilityControllers.updateFacility);

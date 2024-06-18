@@ -1,6 +1,18 @@
 import catchAsync from "../../utils/catchAsync";
 import { facilityServices } from "./facility.service";
 
+const getAllFacility = catchAsync(
+    async (req, res) => {
+        const result = await facilityServices.getAllFacilityFromDB();
+
+        res.status(200).json({
+            success: true,
+            message: 'Facilities retrieved successfully',
+            data: result
+        });
+    }
+);
+
 const createFacility = catchAsync(
     async (req, res) => {
         const result = await facilityServices.createFacilityIntoDB(req.body);
@@ -41,6 +53,7 @@ const deleteFacility = catchAsync(
 
 
 export const facilityControllers = {
+    getAllFacility,
     createFacility,
     updateFacility,
     deleteFacility
