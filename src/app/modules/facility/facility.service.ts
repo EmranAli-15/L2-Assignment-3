@@ -2,9 +2,8 @@ import mongoose from "mongoose";
 import { TFacility } from "./facility.interface";
 import { Facility } from "./facility.model";
 import AppError from "../../errors/AppError";
-import { bookingServices } from "../booking/booking.service";
-import { Booking } from "../booking/booking.model";
-import { TBooking } from "../booking/booking.interface";
+import { TAvailability } from "../availability/availability.interface";
+import { Availability } from "../availability/availability.model";
 
 const getAllFacilityFromDB = async () => {
     const result = await Facility.find();
@@ -12,39 +11,32 @@ const getAllFacilityFromDB = async () => {
 }
 
 const createFacilityIntoDB = async (payload: TFacility) => {
-    // const result = await Facility.create(payload);
-    // return result;
 
     const session = await mongoose.startSession();
     try {
-        const booking: Partial<TBooking> = {};
+        const availability: Partial<TAvailability> = {};
 
         session.startTransaction();
-        const newFacility = await Facility.create([payload], { session });
+        const facility = await Facility.create([payload], { session });
 
-        if (!newFacility.length) {
+        if (!facility.length) {
             throw new AppError(400, 'Failed to create a facility !');
         };
 
-        booking.facility = newFacility[0]._id;
-        booking.date = new Date();
-        booking.startTime = "10:00";
-        booking.endTime = "13:00";
-        const start = Number(booking.startTime.split(":")[0]);
-        const end = Number(booking.endTime.split(":")[0]);
-        booking.payableAmount = (end - start) * payload.pricePerHour;
-        booking.isBooked = "unconfirmed";
+        availability.date = new Date().toJSON().slice(0, 10);
+        availability.startTime = "10:00";
+        availability.endTime = "13:00";
 
-        const bookingInitialized = await Booking.create([booking], { session });
+        const availabilityInitialized = await Availability.create([availability], { session });
 
-        if (!bookingInitialized.length) {
-            throw new AppError(400, 'Something happened wrong! please try again.');
+        if (!availabilityInitialized.length) {
+            throw new AppError(400, 'Something happened wrong!');
         }
 
         await session.commitTransaction();
         await session.endSession();
 
-        return newFacility;
+        return facility;
 
     } catch (error) {
         await session.abortTransaction();
