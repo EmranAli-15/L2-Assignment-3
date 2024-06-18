@@ -7,5 +7,7 @@ const route = express.Router();
 
 route.post('/bookings', auth(userRole.user), validateRequest(bookingValidations.createBookingValidation), bookingControllers.createBooking);
 
+route.get('/bookings', auth(userRole.admin), bookingControllers.getAllBookingForAdminFromDB);
+
 
 export const bookingRoutes = route;

@@ -77,9 +77,15 @@ const createBookingIntoDB = async (user: JwtPayload, payload: TBooking) => {
         throw new AppError(400, 'Something happened wrong! please try again.');
     }
 
+};
+
+const getAllBookingForAdminFromDB = async() => {
+    const result = await Booking.find().populate('user').populate('facility');
+    return result;
 }
 
 
 export const bookingServices = {
-    createBookingIntoDB
+    createBookingIntoDB,
+    getAllBookingForAdminFromDB
 };

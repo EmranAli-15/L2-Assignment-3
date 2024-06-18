@@ -14,7 +14,20 @@ const createBooking = catchAsync(
     }
 );
 
+const getAllBookingForAdminFromDB = catchAsync(
+    async(req, res) => {
+        const result = await bookingServices.getAllBookingForAdminFromDB();
+
+        res.status(200).json({
+            success: true,
+            message: 'Bookings retrieved successfully',
+            data: result
+        });
+    }
+);
+
 
 export const bookingControllers = {
-    createBooking
+    createBooking,
+    getAllBookingForAdminFromDB
 };
