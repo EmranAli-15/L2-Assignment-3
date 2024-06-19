@@ -9,5 +9,9 @@ route.post('/bookings', auth(userRole.user), validateRequest(bookingValidations.
 
 route.get('/bookings', auth(userRole.admin), bookingControllers.getAllBookingForAdminFromDB);
 
+route.get('/bookings/user', auth(userRole.user), bookingControllers.getBookingForUserFromDB);
+
+route.delete('/bookings/:id', auth(userRole.user), bookingControllers.cancelBookingFromDB);
+
 
 export const bookingRoutes = route;

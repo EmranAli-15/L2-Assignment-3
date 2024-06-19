@@ -3,10 +3,9 @@ import { TBooking } from "./booking.interface";
 import { User } from "../user/user.model";
 import { Facility } from "../facility/facility.model";
 import AppError from "../../errors/AppError";
-import mongoose, { ObjectId, Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { Availability } from "../availability/availability.model";
 import { Booking } from "./booking.model";
-import { Schema } from "zod";
 
 const createBookingIntoDB = async (user: JwtPayload, payload: TBooking) => {
 
@@ -87,10 +86,25 @@ const createBookingIntoDB = async (user: JwtPayload, payload: TBooking) => {
 const getAllBookingForAdminFromDB = async () => {
     const result = await Booking.find().populate('user').populate('facility');
     return result;
-}
+};
+
+const getBookingForUserFromDB = async (email: string) => {
+    const userData = await User.findOne({ email: email });
+    const userId = userData?._id;
+
+    const bookings = await Booking.find({ user: userId }).populate('facility').populate('user');
+    return bookings;
+};
+
+const cancelBookingIntoDB = async (id: string) => {
+    const result = Booking.findByIdAndUpdate(id, { isBooked: "canceled" }, { new: true }).populate('facility');
+    return result;
+};
 
 
 export const bookingServices = {
     createBookingIntoDB,
-    getAllBookingForAdminFromDB
+    getAllBookingForAdminFromDB,
+    getBookingForUserFromDB,
+    cancelBookingIntoDB
 };

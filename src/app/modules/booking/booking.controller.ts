@@ -36,8 +36,47 @@ const getAllBookingForAdminFromDB = catchAsync(
     }
 );
 
+const getBookingForUserFromDB = catchAsync(
+    async (req, res) => {
+        const { email } = req.user;
+        const result = await bookingServices.getBookingForUserFromDB(email);
+
+        if (result.length === 0) {
+            res.status(200).json({
+                success: true,
+                "statusCode": 404,
+                message: 'No data found',
+                data: result
+            });
+        } else {
+            res.status(200).json({
+                success: true,
+                "statusCode": 200,
+                message: 'Bookings retrieved successfully',
+                data: result
+            });
+        }
+    }
+);
+
+const cancelBookingFromDB = catchAsync(
+    async (req, res) => {
+        const { id } = req.params;
+        const result = await bookingServices.cancelBookingIntoDB(id);
+
+        res.status(200).json({
+            success: true,
+            "statusCode": 200,
+            message: 'Booking cancelled successfully',
+            data: result
+        });
+    }
+);
+
 
 export const bookingControllers = {
     createBooking,
-    getAllBookingForAdminFromDB
+    getAllBookingForAdminFromDB,
+    getBookingForUserFromDB,
+    cancelBookingFromDB
 };
