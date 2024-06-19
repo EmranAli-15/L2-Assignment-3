@@ -48,6 +48,11 @@ const createFacilityIntoDB = async (payload: TFacility) => {
 
 const updateFacilityIntoDB = async (id: string, payload: Partial<TFacility>) => {
     const result = await Facility.findOneAndUpdate({ _id: id }, payload, { new: true });
+
+    if (!result) {
+        throw new AppError(400, 'Facility not found');
+    }
+
     return result;
 };
 
@@ -56,6 +61,11 @@ const deleteFacilityFromDB = async (id: string) => {
         isDeleted: true
     },
         { new: true });
+
+    if (!result) {
+        throw new AppError(400, 'Facility not found');
+    }
+
     return result;
 };
 

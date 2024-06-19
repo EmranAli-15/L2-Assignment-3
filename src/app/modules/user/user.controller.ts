@@ -8,7 +8,8 @@ const createAUser = catchAsync(
 
         res.status(200).json({
             success: true,
-            message: 'User created successfully !',
+            statusCode: 200,
+            message: 'User registered successfully',
             data: result
         });
     }

@@ -19,7 +19,8 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     const result = yield auth_service_1.authServices.loginUser(req.body);
     res.status(200).json({
         success: true,
-        message: 'User logged successfully',
+        statusCode: 200,
+        message: "User logged in successfully",
         token: result.accessToken,
         data: result.isUserExist
     });

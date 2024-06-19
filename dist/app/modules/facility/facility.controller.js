@@ -15,14 +15,56 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.facilityControllers = void 0;
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 const facility_service_1 = require("./facility.service");
+const getAllFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield facility_service_1.facilityServices.getAllFacilityFromDB();
+    if (result.length === 0) {
+        res.status(200).json({
+            success: true,
+            "statusCode": 404,
+            message: 'No data found',
+            data: result
+        });
+    }
+    else {
+        res.status(200).json({
+            success: true,
+            "statusCode": 200,
+            message: 'Facilities retrieved successfully',
+            data: result
+        });
+    }
+}));
 const createFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield facility_service_1.facilityServices.createFacilityIntoDB(req.body);
     res.status(200).json({
         success: true,
-        message: 'Facility added successfully',
+        statusCode: 200,
+        message: "Facility added successfully",
+        data: result
+    });
+}));
+const updateFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield facility_service_1.facilityServices.updateFacilityIntoDB(id, req.body);
+    res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: "Facility updated successfully",
+        data: result
+    });
+}));
+const deleteFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield facility_service_1.facilityServices.deleteFacilityFromDB(id);
+    res.status(200).json({
+        success: true,
+        message: 'Facility deleted successfully',
         data: result
     });
 }));
 exports.facilityControllers = {
-    createFacility
+    getAllFacility,
+    createFacility,
+    updateFacility,
+    deleteFacility
 };

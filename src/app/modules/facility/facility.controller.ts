@@ -29,7 +29,8 @@ const createFacility = catchAsync(
 
         res.status(200).json({
             success: true,
-            message: 'Facility added successfully',
+            statusCode: 200,
+            message: "Facility added successfully",
             data: result
         });
     }
@@ -42,7 +43,8 @@ const updateFacility = catchAsync(
 
         res.status(200).json({
             success: true,
-            message: 'Facility updated successfully',
+            statusCode: 200,
+            message: "Facility updated successfully",
             data: result
         });
     }

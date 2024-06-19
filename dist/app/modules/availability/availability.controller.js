@@ -12,19 +12,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userControllers = void 0;
+exports.availabilityControllers = void 0;
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
-const user_service_1 = require("./user.service");
-const createAUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const body = req.body;
-    const result = yield user_service_1.userServices.createUserIntoDB(body);
-    res.status(200).json({
-        success: true,
-        statusCode: 200,
-        message: 'User registered successfully',
-        data: result
-    });
+const availability_service_1 = require("./availability.service");
+const getCheckedAvailability = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { date } = req.query;
+    const autoPick = new Date().toJSON().slice(0, 10);
+    const getDate = date ? date : autoPick;
+    const result = yield availability_service_1.availabilityServices.checkedAvailability(getDate);
+    if (result.length === 0) {
+        res.status(200).json({
+            success: true,
+            "statusCode": 404,
+            message: 'No data found',
+            data: result
+        });
+    }
+    else {
+        res.status(200).json({
+            success: true,
+            "statusCode": 200,
+            message: 'Availability checked successfully',
+            data: result
+        });
+    }
 }));
-exports.userControllers = {
-    createAUser,
+exports.availabilityControllers = {
+    getCheckedAvailability
 };

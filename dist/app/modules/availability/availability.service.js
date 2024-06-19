@@ -8,23 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userControllers = void 0;
-const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
-const user_service_1 = require("./user.service");
-const createAUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const body = req.body;
-    const result = yield user_service_1.userServices.createUserIntoDB(body);
-    res.status(200).json({
-        success: true,
-        statusCode: 200,
-        message: 'User registered successfully',
-        data: result
-    });
-}));
-exports.userControllers = {
-    createAUser,
+exports.availabilityServices = void 0;
+const availability_model_1 = require("./availability.model");
+const checkedAvailability = (date) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield availability_model_1.Availability.find({ date: date });
+    return result;
+});
+exports.availabilityServices = {
+    checkedAvailability
 };

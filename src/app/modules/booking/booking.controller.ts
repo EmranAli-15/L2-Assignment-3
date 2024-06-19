@@ -8,7 +8,8 @@ const createBooking = catchAsync(
 
         res.status(200).json({
             success: true,
-            message: 'Booking created successfully',
+            statusCode: 200,
+            message: "Booking created successfully",
             data: result
         });
     }
