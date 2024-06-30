@@ -40,7 +40,7 @@ const createFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
         success: true,
         statusCode: 200,
         message: "Facility added successfully",
-        data: result
+        data: result[0]
     });
 }));
 const updateFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

@@ -31,7 +31,7 @@ const createFacility = catchAsync(
             success: true,
             statusCode: 200,
             message: "Facility added successfully",
-            data: result
+            data: result[0]
         });
     }
 );

@@ -22,7 +22,7 @@ const createBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         success: true,
         statusCode: 200,
         message: "Booking created successfully",
-        data: result
+        data: result[0]
     });
 }));
 const getAllBookingForAdminFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

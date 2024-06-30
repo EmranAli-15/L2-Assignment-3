@@ -10,7 +10,7 @@ const createBooking = catchAsync(
             success: true,
             statusCode: 200,
             message: "Booking created successfully",
-            data: result
+            data: result[0]
         });
     }
 );
