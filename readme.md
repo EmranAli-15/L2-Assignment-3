@@ -1,6 +1,6 @@
 ### Welcome to Booking.Com
 
-* Live link : ``` https://assignment-3-gold-mu.vercel.app/ ```
+* Live link : ``` https://assignment-3-iota-bay.vercel.app/ ```
 
 ##### For login as a Admin :
     ```
