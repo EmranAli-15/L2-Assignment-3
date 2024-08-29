@@ -1,5 +1,5 @@
 import { User } from "../user/user.model";
-import { TAuth } from "./auth.interface";
+import { TAuth, TAuthRegister } from "./auth.interface";
 import AppError from "../../errors/AppError";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -41,7 +41,33 @@ const loginUser = async (payload: TAuth) => {
     };
 };
 
+const registerUser = async (payload: TAuthRegister) => {
+    const role = "user";
+    const data = { ...payload, role };
+
+    const createUser = await User.create(data);
+
+    const jwtPayload = {
+        email: createUser.email,
+        role: createUser.role
+    };
+
+    const accessToken = jwt.sign(
+        jwtPayload,
+        config.accessToken as string,
+        {
+            expiresIn: "10d"
+        }
+    );
+
+    return {
+        accessToken,
+        createUser
+    };
+};
+
 
 export const authServices = {
-    loginUser
+    loginUser,
+    registerUser
 };

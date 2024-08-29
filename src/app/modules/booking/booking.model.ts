@@ -34,6 +34,9 @@ const bookingSchema = new Schema<TBooking>({
         required: false,
         default: "confirmed"
     }
+},
+{
+    timestamps: true
 });
 
 
