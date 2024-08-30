@@ -6,7 +6,7 @@ import { TAvailability } from "../availability/availability.interface";
 import { Availability } from "../availability/availability.model";
 
 const getAllFacilityFromDB = async () => {
-    const result = await Facility.find();
+    const result = await Facility.find({ isDeleted: false });
     return result;
 }
 
