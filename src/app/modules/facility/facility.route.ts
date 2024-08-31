@@ -8,6 +8,8 @@ const route = express.Router();
 
 route.get('/facility', facilityControllers.getAllFacility);
 
+route.get('/popularFacility', facilityControllers.getPopularFacility);
+
 route.get('/facility/:id', auth(userRole.admin), facilityControllers.getAFacility);
 
 route.post('/facility', auth(userRole.admin), validateRequest(facilityValidations.createFacilityValidation), facilityControllers.createFacility);

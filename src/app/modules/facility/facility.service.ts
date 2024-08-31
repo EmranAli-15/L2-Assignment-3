@@ -15,6 +15,11 @@ const getAFacilityFromDB = async (id: string) => {
     return result;
 }
 
+const getPopularAFacilityFromDB = async () => {
+    const result = await Facility.find({ isDeleted: false }).limit(4);
+    return result;
+}
+
 const createFacilityIntoDB = async (payload: TFacility) => {
 
     const session = await mongoose.startSession();
@@ -80,5 +85,6 @@ export const facilityServices = {
     getAFacilityFromDB,
     createFacilityIntoDB,
     updateFacilityIntoDB,
-    deleteFacilityFromDB
+    deleteFacilityFromDB,
+    getPopularAFacilityFromDB
 };
