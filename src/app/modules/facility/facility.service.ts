@@ -8,6 +8,11 @@ import { Availability } from "../availability/availability.model";
 const getAllFacilityFromDB = async () => {
     const result = await Facility.find({ isDeleted: false });
     return result;
+};
+
+const getAFacilityFromDB = async (id: string) => {
+    const result = await Facility.findById(id);
+    return result;
 }
 
 const createFacilityIntoDB = async (payload: TFacility) => {
@@ -72,6 +77,7 @@ const deleteFacilityFromDB = async (id: string) => {
 
 export const facilityServices = {
     getAllFacilityFromDB,
+    getAFacilityFromDB,
     createFacilityIntoDB,
     updateFacilityIntoDB,
     deleteFacilityFromDB
