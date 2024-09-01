@@ -10,7 +10,7 @@ route.get('/facility', facilityControllers.getAllFacility);
 
 route.get('/popularFacility', facilityControllers.getPopularFacility);
 
-route.get('/facility/:id', auth(userRole.admin), facilityControllers.getAFacility);
+route.get('/facility/:id', facilityControllers.getAFacility);
 
 route.post('/facility', auth(userRole.admin), validateRequest(facilityValidations.createFacilityValidation), facilityControllers.createFacility);
 

@@ -46,7 +46,6 @@ const createBookingIntoDB = async (user: JwtPayload, payload: TBooking) => {
                 endTime: payload.endTime
             }
         );
-
         if (!theAvailability) {
             throw new AppError(400, 'Your schedule not matched, Please check the availability.');
         };

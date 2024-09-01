@@ -4,14 +4,15 @@ import { ZodError } from "zod";
 import validatorError from "../errors/validatorError";
 import mongoServerError from "../errors/mongoServerError";
 import AppError from "../errors/AppError";
-import zodError from "../errors/zodError";
+import zodErrors from "../errors/zodError";
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     let handledErrors;
     let status = 400;
+    
 
     if (error instanceof ZodError) {
-        const simplifiedErrors = zodError(error);
+        const simplifiedErrors = zodErrors(error);
         handledErrors = simplifiedErrors;
         status = simplifiedErrors.status;
     }

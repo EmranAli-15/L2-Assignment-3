@@ -27,8 +27,7 @@ const auth = (...requiredFields: TUserRole[]) => {
                 };
 
                 const { role } = decoded as JwtPayload;
-                
-                if(requiredFields && !requiredFields.includes(role)){
+                if (requiredFields && !requiredFields.includes(role)) {
                     throw new AppError(401, 'You are not authorized person !');
                 };
 
