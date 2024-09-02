@@ -35,5 +35,7 @@ const bookingSchema = new mongoose_1.Schema({
         required: false,
         default: "confirmed"
     }
+}, {
+    timestamps: true
 });
 exports.Booking = (0, mongoose_1.model)('Booking', bookingSchema);

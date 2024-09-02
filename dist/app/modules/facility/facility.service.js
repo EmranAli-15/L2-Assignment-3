@@ -18,7 +18,15 @@ const facility_model_1 = require("./facility.model");
 const AppError_1 = __importDefault(require("../../errors/AppError"));
 const availability_model_1 = require("../availability/availability.model");
 const getAllFacilityFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield facility_model_1.Facility.find();
+    const result = yield facility_model_1.Facility.find({ isDeleted: false });
+    return result;
+});
+const getAFacilityFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield facility_model_1.Facility.findById(id);
+    return result;
+});
+const getPopularAFacilityFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield facility_model_1.Facility.find({ isDeleted: false }).limit(4);
     return result;
 });
 const createFacilityIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
@@ -66,7 +74,9 @@ const deleteFacilityFromDB = (id) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.facilityServices = {
     getAllFacilityFromDB,
+    getAFacilityFromDB,
     createFacilityIntoDB,
     updateFacilityIntoDB,
-    deleteFacilityFromDB
+    deleteFacilityFromDB,
+    getPopularAFacilityFromDB
 };

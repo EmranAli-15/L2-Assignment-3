@@ -34,6 +34,8 @@ const facility_controller_1 = require("./facility.controller");
 const auth_1 = __importStar(require("../../middlewares/auth"));
 const route = express_1.default.Router();
 route.get('/facility', facility_controller_1.facilityControllers.getAllFacility);
+route.get('/popularFacility', facility_controller_1.facilityControllers.getPopularFacility);
+route.get('/facility/:id', facility_controller_1.facilityControllers.getAFacility);
 route.post('/facility', (0, auth_1.default)(auth_1.userRole.admin), (0, validateRequest_1.default)(facility_validation_1.facilityValidations.createFacilityValidation), facility_controller_1.facilityControllers.createFacility);
 route.put('/facility/:id', (0, auth_1.default)(auth_1.userRole.admin), (0, validateRequest_1.default)(facility_validation_1.facilityValidations.updateFacilityValidation), facility_controller_1.facilityControllers.updateFacility);
 route.delete('/facility/:id', (0, auth_1.default)(auth_1.userRole.admin), facility_controller_1.facilityControllers.deleteFacility);

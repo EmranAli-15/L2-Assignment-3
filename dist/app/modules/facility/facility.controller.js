@@ -34,6 +34,26 @@ const getAllFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
         });
     }
 }));
+const getAFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield facility_service_1.facilityServices.getAFacilityFromDB(id);
+    res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: "Facility retrieved successfully",
+        data: result
+    });
+}));
+const getPopularFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield facility_service_1.facilityServices.getPopularAFacilityFromDB();
+    res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: "Facilities retrieved successfully",
+        data: result
+    });
+}));
 const createFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield facility_service_1.facilityServices.createFacilityIntoDB(req.body);
     res.status(200).json({
@@ -64,7 +84,9 @@ const deleteFacility = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
 }));
 exports.facilityControllers = {
     getAllFacility,
+    getAFacility,
     createFacility,
     updateFacility,
-    deleteFacility
+    deleteFacility,
+    getPopularFacility
 };

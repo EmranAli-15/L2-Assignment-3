@@ -44,6 +44,23 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         isUserExist
     };
 });
+const registerUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const role = "user";
+    const data = Object.assign(Object.assign({}, payload), { role });
+    const createUser = yield user_model_1.User.create(data);
+    const jwtPayload = {
+        email: createUser.email,
+        role: createUser.role
+    };
+    const accessToken = jsonwebtoken_1.default.sign(jwtPayload, config_1.default.accessToken, {
+        expiresIn: "10d"
+    });
+    return {
+        accessToken,
+        createUser
+    };
+});
 exports.authServices = {
-    loginUser
+    loginUser,
+    registerUser
 };

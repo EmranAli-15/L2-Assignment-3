@@ -8,6 +8,16 @@ const loginValidation = zod_1.z.object({
         password: zod_1.z.string({ required_error: 'Password is required' })
     })
 });
+const registerValidation = zod_1.z.object({
+    body: zod_1.z.object({
+        name: zod_1.z.string({ required_error: 'Name is required' }),
+        email: zod_1.z.string({ required_error: 'E-mail is required' }),
+        phone: zod_1.z.string({ required_error: 'Phone is required' }),
+        address: zod_1.z.string({ required_error: 'Address is required' }),
+        password: zod_1.z.string({ required_error: 'Password is required' }),
+    })
+});
 exports.authValidations = {
-    loginValidation
+    loginValidation,
+    registerValidation
 };
